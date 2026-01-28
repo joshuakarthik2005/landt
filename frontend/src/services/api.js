@@ -7,6 +7,7 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: false,  // Don't send credentials with CORS
 });
 
 export const analysisAPI = {
