@@ -1,18 +1,59 @@
+# Environment files (keep templates)
+.env
+.env.local
+.env.*.local
+!.env.production
+!.env.development
+
+# Build outputs
+dist/
+build/
+
+# Uploads and data
+uploads/
+*.xlsx
+*.xls
+*.xlsm
+
+# Models
+*.pt
+*.pth
+models/
+
+# Logs
+*.log
+logs/
+
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 venv/
-.env
+env/
+*.egg-info/
 
 # Node
 node_modules/
-dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 .DS_Store
 
 # Rust
 target/
+Cargo.lock
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Deployment
+.vercel

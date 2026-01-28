@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: formula-intelligence-backend
+    runtime: python
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      export PATH="$HOME/.cargo/bin:$PATH"
+      cd rust_reader && maturin build --release && pip install target/wheels/*.whl && cd ..
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: INFO
+      - key: MAX_WORKERS
+        value: 4
+      - key: REDIS_HOST
+        value: localhost
+      - key: REDIS_PORT
+        value: 6379
+      - key: ENABLE_CACHE
+        value: false
+      - key: CORS_ORIGINS
+        value: '["https://your-frontend-app.vercel.app","http://localhost:3000"]'
+    healthCheckPath: /health
+    
+  - type: redis
+    name: formula-intelligence-redis
+    ipAllowList: []

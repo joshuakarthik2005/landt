@@ -1,7 +1,6 @@
 use pyo3::prelude::*;
-use pyo3::types::{PyDict, PyList};
-use calamine::{Reader, open_workbook, Xlsx, DataType, Range};
-use std::collections::HashMap;
+use pyo3::types::PyDict;
+use calamine::{Reader, open_workbook, Xlsx, Data, Range};
 use rayon::prelude::*;
 
 /// Represents a cell with its value and formula
@@ -32,6 +31,7 @@ impl Cell {
 
 /// Represents a worksheet with all its cells
 #[pyclass]
+#[derive(Clone)]
 struct Sheet {
     #[pyo3(get)]
     name: String,
@@ -102,7 +102,7 @@ impl ExcelReader {
             .par_iter()
             .filter_map(|name| {
                 let mut wb: Xlsx<_> = open_workbook(&self.path).ok()?;
-                let range = wb.worksheet_range(name).ok()??;
+                let range = wb.worksheet_range(name).ok()?;
                 Some(Self::parse_sheet(name.clone(), range))
             })
             .collect();
@@ -147,7 +147,7 @@ impl ExcelReader {
 
 impl ExcelReader {
     /// Parse a single sheet range into a Sheet struct
-    fn parse_sheet(name: String, range: Range<DataType>) -> Sheet {
+    fn parse_sheet(name: String, range: Range<Data>) -> Sheet {
         let (row_count, col_count) = range.get_size();
         let mut cells = Vec::new();
 
@@ -163,14 +163,15 @@ impl ExcelReader {
                 };
 
                 let data_type = match cell {
-                    DataType::Int(_) => "int",
-                    DataType::Float(_) => "float",
-                    DataType::String(_) => "string",
-                    DataType::Bool(_) => "bool",
-                    DataType::DateTime(_) => "datetime",
-                    DataType::Error(_) => "error",
-                    DataType::Empty => "empty",
-                    _ => "unknown",
+                    Data::Int(_) => "int",
+                    Data::Float(_) => "float",
+                    Data::String(_) => "string",
+                    Data::Bool(_) => "bool",
+                    Data::DateTime(_) => "datetime",
+                    Data::DateTimeIso(_) => "datetime_iso",
+                    Data::DurationIso(_) => "duration_iso",
+                    Data::Error(_) => "error",
+                    Data::Empty => "empty",
                 };
 
                 cells.push(Cell {
@@ -191,17 +192,18 @@ impl ExcelReader {
         }
     }
 
-    /// Convert DataType to String
-    fn datatype_to_string(cell: &DataType) -> String {
+    /// Convert Data to String
+    fn datatype_to_string(cell: &Data) -> String {
         match cell {
-            DataType::Int(i) => i.to_string(),
-            DataType::Float(f) => f.to_string(),
-            DataType::String(s) => s.clone(),
-            DataType::Bool(b) => b.to_string(),
-            DataType::DateTime(dt) => format!("{:?}", dt),
-            DataType::Error(e) => format!("#{:?}", e),
-            DataType::Empty => String::new(),
-            _ => String::from("UNKNOWN"),
+            Data::Int(i) => i.to_string(),
+            Data::Float(f) => f.to_string(),
+            Data::String(s) => s.clone(),
+            Data::Bool(b) => b.to_string(),
+            Data::DateTime(dt) => format!("{:?}", dt),
+            Data::DateTimeIso(dt) => dt.clone(),
+            Data::DurationIso(d) => d.clone(),
+            Data::Error(e) => format!("#{:?}", e),
+            Data::Empty => String::new(),
         }
     }
 }
