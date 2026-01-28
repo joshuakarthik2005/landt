@@ -1,0 +1,219 @@
+[
+  {
+    "name": "Budget",
+    "cells": [
+      {
+        "row": 1,
+        "col": "A",
+        "value": "Item",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 1,
+        "col": "B",
+        "value": "Q1",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 1,
+        "col": "C",
+        "value": "Q2",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 1,
+        "col": "D",
+        "value": "Q3",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 1,
+        "col": "E",
+        "value": "Q4",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 1,
+        "col": "F",
+        "value": "Total",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 2,
+        "col": "A",
+        "value": "Revenue",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 2,
+        "col": "B",
+        "value": "10000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 2,
+        "col": "C",
+        "value": "12000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 2,
+        "col": "D",
+        "value": "15000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 2,
+        "col": "E",
+        "value": "18000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 2,
+        "col": "F",
+        "value": "=SUM(B2:E2)",
+        "formula": "=SUM(B2:E2)",
+        "data_type": "str"
+      },
+      {
+        "row": 3,
+        "col": "A",
+        "value": "Costs",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 3,
+        "col": "B",
+        "value": "6000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 3,
+        "col": "C",
+        "value": "7000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 3,
+        "col": "D",
+        "value": "8000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 3,
+        "col": "E",
+        "value": "9000",
+        "formula": null,
+        "data_type": "int"
+      },
+      {
+        "row": 3,
+        "col": "F",
+        "value": "=SUM(B3:E3)",
+        "formula": "=SUM(B3:E3)",
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "A",
+        "value": "Profit",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "B",
+        "value": "=B2-B3",
+        "formula": "=B2-B3",
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "C",
+        "value": "=C2-C3",
+        "formula": "=C2-C3",
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "D",
+        "value": "=D2-D3",
+        "formula": "=D2-D3",
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "E",
+        "value": "=E2-E3",
+        "formula": "=E2-E3",
+        "data_type": "str"
+      },
+      {
+        "row": 4,
+        "col": "F",
+        "value": "=SUM(B4:E4)",
+        "formula": "=SUM(B4:E4)",
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "A",
+        "value": "Margin %",
+        "formula": null,
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "B",
+        "value": "=B4/B2*100",
+        "formula": "=B4/B2*100",
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "C",
+        "value": "=C4/C2*100",
+        "formula": "=C4/C2*100",
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "D",
+        "value": "=D4/D2*100",
+        "formula": "=D4/D2*100",
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "E",
+        "value": "=E4/E2*100",
+        "formula": "=E4/E2*100",
+        "data_type": "str"
+      },
+      {
+        "row": 5,
+        "col": "F",
+        "value": "=F4/F2*100",
+        "formula": "=F4/F2*100",
+        "data_type": "str"
+      }
+    ],
+    "row_count": 5,
+    "col_count": 6
+  }
+]

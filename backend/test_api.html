@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+
+        pre {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        button {
+            background: #0f3460;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #16213e;
+        }
+
+        .metric {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+        }
+
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ecca3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Formula Intelligence - API Test</h1>
+
+    <div>
+        <input type="file" id="fileInput" accept=".xlsx,.xlsm,.xls">
+        <button onclick="uploadFile()">Upload & Analyze</button>
+        <button onclick="testDefaultFile()">Test simple_budget.xlsx</button>
+        <button onclick="checkStatus()">Check Status</button>
+        <button onclick="getResults()">Get Results</button>
+    </div>
+
+    <div id="metrics" style="margin: 20px 0;"></div>
+    <div id="output"></div>
+
+    <script>
+        let currentJobId = null;
+
+        async function testDefaultFile() {
+            try {
+                // Fetch the test file from the server
+                const response = await fetch('test_files/simple_budget.xlsx');
+                const blob = await response.blob();
+                const file = new File([blob], 'simple_budget.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Upload it
+                await uploadFileWithData(file);
+            } catch (error) {
+                document.getElementById('output').innerHTML = '<pre style="color: red;">Error fetching test file: ' + error.message + '</pre>';
+            }
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a file first');
+                return;
+            }
+            await uploadFileWithData(file);
+        }
+
+        async function uploadFileWithData(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            document.getElementById('output').innerHTML = 'Uploading...';
+
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/analyze?include_values=false&detect_anomalies=true&identify_cost_drivers=true&top_drivers_count=50', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                currentJobId = data.job_id;
+
+                document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+
+                // Auto-poll status
+                setTimeout(checkStatus, 2000);
+            } catch (error) {
+                document.getElementById('output').innerHTML = '<pre style="color: red;">Error: ' + error.message + '</pre>';
+            }
+        }
+
+        async function checkStatus() {
+            if (!currentJobId) {
+                alert('No job ID. Upload a file first.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8000/api/v1/analysis/${currentJobId}/status`);
+                const data = await response.json();
+
+                document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+
+                if (data.status === 'completed') {
+                    setTimeout(getResults, 500);
+                } else if (data.status === 'processing') {
+                    setTimeout(checkStatus, 2000);
+                }
+            } catch (error) {
+                document.getElementById('output').innerHTML = '<pre style="color: red;">Error: ' + error.message + '</pre>';
+            }
+        }
+
+        async function getResults() {
+            if (!currentJobId) {
+                alert('No job ID. Upload a file first.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8000/api/v1/analysis/${currentJobId}`);
+                const data = await response.json();
+
+                // Display metrics
+                const graph = data.graph || {};
+                const metrics = data.metrics || {};
+                const graphMetrics = graph.metrics || {};
+
+                document.getElementById('metrics').innerHTML = `
+                    <div class="metric">
+                        <div>Total Cells</div>
+                        <div class="value">${graphMetrics.node_count || graph.nodes?.length || 0}</div>
+                    </div>
+                    <div class="metric">
+                        <div>Dependencies</div>
+                        <div class="value">${graphMetrics.edge_count || graph.edges?.length || 0}</div>
+                    </div>
+                    <div class="metric">
+                        <div>Formulas</div>
+                        <div class="value">${metrics.formula_count || 0}</div>
+                    </div>
+                    <div class="metric">
+                        <div>Input Cells</div>
+                        <div class="value">${metrics.input_count || 0}</div>
+                    </div>
+                    <div class="metric">
+                        <div>Sheets</div>
+                        <div class="value">${metrics.sheet_count || 0}</div>
+                    </div>
+                `;
+
+                // Display full JSON
+                document.getElementById('output').innerHTML = '<h3>Full Response:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('output').innerHTML = '<pre style="color: red;">Error: ' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+
+</html>
