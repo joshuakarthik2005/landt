@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     
     # API
     API_V1_PREFIX: str = "/api/v1"
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://localhost:8001"]
+    CORS_ORIGINS: str = "*"  # Will be parsed in main.py
     
     # File Upload
     MAX_FILE_SIZE_MB: int = 100
