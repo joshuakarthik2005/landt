@@ -43,7 +43,7 @@ if cors_origins == "*":
 else:
     # Parse comma-separated origins or use as-is if it's already a list
     allow_origins = [origin.strip() for origin in cors_origins.split(",")] if isinstance(cors_origins, str) else cors_origins
-    allow_credentials = True
+    allow_credentials = False  # Disable credentials for now
 
 app.add_middleware(
     CORSMiddleware,
@@ -51,7 +51,17 @@ app.add_middleware(
     allow_credentials=allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
+
+# Add CORS headers to all responses
+@app.middleware("http")
+async def add_cors_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
 
 
 # Add correlation ID middleware
