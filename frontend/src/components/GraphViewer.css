@@ -1,0 +1,236 @@
+/* GraphViewer localized styles */
+.graph-viewer-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #0f172a;
+}
+
+/* Enhanced Legend Overlay */
+.graph-controls-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    min-width: 240px;
+    max-width: 280px;
+}
+
+.legend-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+    padding-bottom: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #cbd5e1;
+    padding: 4px 0;
+}
+
+.legend-label {
+    flex: 1;
+    font-weight: 500;
+}
+
+.legend-count {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 700;
+    background: rgba(148, 163, 184, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dot.input {
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+.dot.formula {
+    background: #60a5fa;
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+}
+
+.dot.value {
+    background: #94a3b8;
+    box-shadow: 0 0 8px rgba(148, 163, 184, 0.3);
+}
+
+.legend-divider {
+    height: 1px;
+    background: rgba(148, 163, 184, 0.3);
+    margin: 16px 0;
+}
+
+.legend-stats {
+    margin-top: 12px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    padding: 6px 0;
+}
+
+.stat-label {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.stat-value {
+    color: #e2e8f0;
+    font-weight: 700;
+    background: rgba(96, 165, 250, 0.15);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Tooltip transition */
+.node-tooltip {
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+/* Canvas responsiveness */
+canvas {
+    outline: none;
+}
+
+/* Synapse View Toolbar */
+.graph-toolbar {
+    position: absolute;
+    top: 24px;
+    right: 34px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(8px);
+}
+
+.toolbar-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 6px;
+    color: #e2e8f0;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+    color: #60a5fa;
+}
+
+/* Floating Stats Layout */
+.floating-stats {
+    position: absolute;
+    top: 80px;
+    right: 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 140px;
+    pointer-events: none;
+    /* Let clicks pass through to graph */
+    z-index: 40;
+}
+
+.stat-card {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 1px;
+}
+
+.viewing-card {
+    background: rgba(30, 58, 100, 0.9);
+    /* Blue tint */
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    backdrop-filter: blur(12px);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s ease-out;
+    pointer-events: auto;
+}
+
+.viewing-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #60a5fa;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.viewing-id {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.legend-hint {
+    margin-top: 10px;
+    color: #64748b;
+    font-style: italic;
+    text-align: center;
+}

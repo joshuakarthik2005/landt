@@ -1,0 +1,455 @@
+.formula-optimization-container {
+    padding: 24px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background: rgba(15, 23, 42, 0.4);
+    overflow: hidden;
+    /* Main container does not scroll */
+}
+
+/* Make sure text wraps in zoomed view */
+.formula-optimization-container * {
+    white-space: pre-wrap;
+}
+
+/* Summary Cards (Fixed at top) */
+/* No changes needed to children, but ensures container doesn't shrink */
+.optimization-summary {
+    flex-shrink: 0;
+}
+
+/* Summary Cards */
+.optimization-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s;
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+}
+
+.summary-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+}
+
+.summary-content {
+    flex: 1;
+}
+
+.summary-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+    line-height: 1;
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Optimization Table Container */
+.optimization-table-container {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 12px;
+    flex: 1;
+    /* Take all remaining vertical space */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: auto;
+    /* Horizontal scrolling if needed */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    /* Crucial for nested flex scrolling */
+    scroll-behavior: smooth;
+    padding-bottom: 20px;
+}
+
+.optimization-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.optimization-table thead {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+    border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.optimization-table th {
+    padding: 20px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+    /* Increased from 0.85rem */
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.optimization-table tbody tr {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.05);
+    transition: all 0.2s;
+}
+
+.optimization-table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.optimization-table td {
+    padding: 24px 16px;
+    /* Increased padding */
+    vertical-align: top;
+}
+
+/* Cell ID Column */
+.cell-id-col {
+    min-width: 140px;
+}
+
+.cell-badge {
+    font-weight: 700;
+    color: #60a5fa;
+    font-size: 1.1rem;
+    /* Increased from 1rem */
+    margin-bottom: 6px;
+}
+
+.sheet-name {
+    font-size: 0.85rem;
+    /* Increased from 0.75rem */
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Formula Columns */
+.formula-col {
+    min-width: 320px;
+    max-width: 450px;
+}
+
+.formula-original,
+.formula-optimized {
+    display: block;
+    padding: 14px 16px;
+    /* Increased padding */
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    /* Increased from 0.85rem */
+    word-break: break-all;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    position: relative;
+    font-weight: 600;
+}
+
+.formula-original {
+    color: #fbbf24;
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.formula-original::before {
+    content: "Current";
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    font-size: 0.65rem;
+    color: #ef4444;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.formula-optimized {
+    color: #34d399;
+    border-left: 4px solid #10b981;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.formula-optimized::before {
+    content: "Suggested";
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    font-size: 0.65rem;
+    color: #10b981;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+.complexity-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.complexity-badge.optimized {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Improvements Column */
+.improvements-col {
+    min-width: 200px;
+}
+
+.improvement-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 3px;
+    white-space: nowrap;
+}
+
+/* Time Column */
+.time-col {
+    min-width: 110px;
+    text-align: center;
+}
+
+.time-value {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
+    color: #fbbf24;
+    border: 2px solid rgba(245, 158, 11, 0.4);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+    transition: all 0.2s;
+}
+
+.time-value:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Gain Column */
+.gain-col {
+    min-width: 140px;
+    padding: 18px 14px !important;
+}
+
+.gain-indicator {
+    position: relative;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.gain-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.gain-text {
+    position: relative;
+    z-index: 1;
+    font-weight: 800;
+    color: #fff;
+    font-size: 0.95rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+}
+
+
+/* Responsive */
+@media (max-width: 1600px) {
+    .optimization-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .formula-col {
+        max-width: 250px;
+    }
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    min-height: 400px;
+}
+
+.empty-state h3 {
+    margin: 20px 0 10px 0;
+    color: #cbd5e1;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.empty-state p {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Formula Same (Optimal) */
+.formula-same {
+    display: block;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #94a3b8;
+    border-left: 4px solid #64748b;
+    position: relative;
+    opacity: 0.8;
+}
+
+.optimal-badge {
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    font-size: 0.65rem;
+    color: #94a3b8;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Already Efficient Tag */
+.improvement-tag.optimal {
+    background: transparent !important;
+    color: #94a3b8 !important;
+    border: 1px dashed rgba(148, 163, 184, 0.3) !important;
+    font-style: italic;
+}
+
+/* Gain Placeholder */
+.gain-placeholder {
+    width: 100%;
+    text-align: center;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.time-value.optimal {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #64748b;
+}
+
+/* Suggestion Style (Best Practice) */
+.formula-same.suggestion {
+    border-left-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    opacity: 1;
+}
+
+.suggestion-badge {
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    font-size: 0.65rem;
+    color: #60a5fa;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.formula-same.suggestion:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+/* Row Styling */
+.optimization-table tbody tr.already-optimal {
+    opacity: 0.6;
+}
+
+.optimization-table tbody tr.already-optimal:hover {
+    opacity: 1;
+}
+
+.optimization-table tbody tr.has-optimization {
+    background: rgba(59, 130, 246, 0.02);
+}
