@@ -10,6 +10,7 @@ import ComplexityChart from './components/ComplexityChart';
 import CostDriverList from './components/CostDriverList';
 import { Activity, GitGraph, FileSpreadsheet, Layers, Maximize, AlertCircle, Target } from 'lucide-react';
 import './App.css';
+import './components/LandingFeatures.css';
 
 function App() {
     const { analysisResult, loading, error, reset: resetAnalysis } = useAnalysisStore();
@@ -63,7 +64,68 @@ function App() {
                             <h2>Visualize & Optimize Your Financial Models</h2>
                             <p>Drag and drop your Excel file to instantly map dependencies, detect circular references, and analyze formula complexity.</p>
                         </div>
+                        
+                        {/* Feature Cards */}
+                        <div className="features-grid">
+                            <div className="feature-card">
+                                <GitGraph className="feature-icon" size={32} />
+                                <h3>Dependency Mapping</h3>
+                                <p>Visualize how formulas connect across sheets with interactive graphs</p>
+                            </div>
+                            <div className="feature-card">
+                                <Target className="feature-icon" size={32} />
+                                <h3>Cost Driver Analysis</h3>
+                                <p>Identify key cells that impact your bottom line using graph algorithms</p>
+                            </div>
+                            <div className="feature-card">
+                                <AlertCircle className="feature-icon" size={32} />
+                                <h3>Anomaly Detection</h3>
+                                <p>Find broken references, circular dependencies, and hard-coded values</p>
+                            </div>
+                            <div className="feature-card">
+                                <Layers className="feature-icon" size={32} />
+                                <h3>Formula Optimization</h3>
+                                <p>Discover unused formulas and optimize complex calculations</p>
+                            </div>
+                        </div>
+
                         <FileUpload />
+
+                        {/* Sample Data Section */}
+                        <div className="sample-section">
+                            <div className="divider">
+                                <span>or</span>
+                            </div>
+                            <button className="sample-btn" onClick={() => {
+                                // Create a mock sample file trigger
+                                const sampleInfo = document.createElement('div');
+                                sampleInfo.className = 'sample-info';
+                                sampleInfo.innerHTML = `
+                                    <p><strong>💡 Try our sample Excel file!</strong></p>
+                                    <p>Download the pre-built sample workbook with formulas, cross-sheet references, and intentional errors to explore all features.</p>
+                                `;
+                                document.querySelector('.sample-section').appendChild(sampleInfo);
+                            }}>
+                                <FileSpreadsheet size={20} />
+                                Try Sample Excel File
+                            </button>
+                        </div>
+
+                        {/* Stats Section */}
+                        <div className="stats-section">
+                            <div className="stat-item">
+                                <div className="stat-number">100k+</div>
+                                <div className="stat-label">Formulas Analyzed</div>
+                            </div>
+                            <div className="stat-item">
+                                <div className="stat-number">10x</div>
+                                <div className="stat-label">Faster than Manual</div>
+                            </div>
+                            <div className="stat-item">
+                                <div className="stat-number">50+</div>
+                                <div className="stat-label">Sheets Supported</div>
+                            </div>
+                        </div>
                     </div>
                 )}
 

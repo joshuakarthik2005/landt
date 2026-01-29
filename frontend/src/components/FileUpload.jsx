@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, FileSpreadsheet, Sparkles } from 'lucide-react';
 import { useAnalysisStore } from '../store/analysisStore';
+import './FileUpload.css';
 
 const FileUpload = () => {
     const [dragActive, setDragActive] = useState(false);
@@ -78,9 +79,29 @@ const FileUpload = () => {
                 />
 
                 <label htmlFor="file-input" className="file-upload-label">
-                    <Upload size={48} className="upload-icon" />
+                    <div className="upload-icon-wrapper">
+                        <div className="upload-icon-bg"></div>
+                        <Upload size={48} className="upload-icon" />
+                        <Sparkles size={20} className="sparkle-icon sparkle-1" />
+                        <Sparkles size={16} className="sparkle-icon sparkle-2" />
+                    </div>
                     <h3>Drop Excel file here or click to browse</h3>
-                    <p>Supports .xlsx, .xlsm, .xls files up to 100MB</p>
+                    <p className="upload-subtitle">Supports .xlsx, .xlsm, .xls files up to 100MB</p>
+                    
+                    <div className="file-types">
+                        <div className="file-type-badge">
+                            <FileSpreadsheet size={16} />
+                            <span>.xlsx</span>
+                        </div>
+                        <div className="file-type-badge">
+                            <FileSpreadsheet size={16} />
+                            <span>.xlsm</span>
+                        </div>
+                        <div className="file-type-badge">
+                            <FileSpreadsheet size={16} />
+                            <span>.xls</span>
+                        </div>
+                    </div>
                 </label>
             </div>
 
@@ -88,14 +109,15 @@ const FileUpload = () => {
                 <div className="upload-progress">
                     <div className="progress-bar">
                         <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+                        <div className="progress-shine"></div>
                     </div>
-                    <p className="progress-text">{statusMessage} ({progress}%)</p>
+                    <p className="progress-text">{statusMessage} <span className="progress-percentage">{progress}%</span></p>
                 </div>
             )}
 
             {error && (
                 <div className="upload-error">
-                    <p>Error: {error}</p>
+                    <p>⚠️ Error: {error}</p>
                 </div>
             )}
         </div>
