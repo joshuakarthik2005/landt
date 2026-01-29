@@ -89,7 +89,29 @@ function App() {
                             </div>
                         </div>
 
-                        <FileUpload />
+                        {/* Upload and Demo Section Side by Side */}
+                        <div className="upload-demo-container">
+                            <div className="upload-column">
+                                <h3>Upload Your Excel File</h3>
+                                <FileUpload />
+                            </div>
+                            
+                            <div className="demo-column">
+                                <h3>See It In Action</h3>
+                                <p>Watch how Formula Intelligence transforms your Excel analysis</p>
+                                <div className="video-container">
+                                    <video 
+                                        controls 
+                                        preload="metadata"
+                                        poster=""
+                                        className="demo-video"
+                                    >
+                                        <source src="/lt.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
 
                         {/* Sample Data Section */}
                         <div className="sample-section">
