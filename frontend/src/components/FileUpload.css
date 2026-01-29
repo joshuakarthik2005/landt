@@ -59,6 +59,7 @@
 .file-upload-label {
     cursor: pointer;
     display: block;
+    pointer-events: none;
 }
 
 /* Upload Icon Wrapper */

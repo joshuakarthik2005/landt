@@ -34,6 +34,15 @@ const FileUpload = () => {
         }
     }, []);
 
+    const handleClick = useCallback((e) => {
+        console.log('Upload area clicked');
+        const input = document.getElementById('file-input');
+        console.log('File input element:', input);
+        if (input) {
+            input.click();
+        }
+    }, []);
+
     const handleFile = (file) => {
         // Validate file type
         const validExtensions = ['.xlsx', '.xlsm', '.xls'];
@@ -68,6 +77,7 @@ const FileUpload = () => {
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}
                 onDrop={handleDrop}
+                onClick={handleClick}
             >
                 <input
                     type="file"
@@ -78,7 +88,7 @@ const FileUpload = () => {
                     disabled={isLoading}
                 />
 
-                <label htmlFor="file-input" className="file-upload-label">
+                <div className="file-upload-label">
                     <div className="upload-icon-wrapper">
                         <div className="upload-icon-bg"></div>
                         <Upload size={48} className="upload-icon" />
@@ -102,7 +112,7 @@ const FileUpload = () => {
                             <span>.xls</span>
                         </div>
                     </div>
-                </label>
+                </div>
             </div>
 
             {isLoading && (
